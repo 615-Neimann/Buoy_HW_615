@@ -1,0 +1,555 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+%
+\documentclass[
+]{article}
+\usepackage{amsmath,amssymb}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
+\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
+\makeatother
+% Scale images if necessary, so that they will not overflow the page
+% margins by default, and it is still possible to overwrite the defaults
+% using explicit options in \includegraphics[width, height, ...]{}
+\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
+% Set default figure placement to htbp
+\makeatletter
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\ifLuaTeX
+  \usepackage{selnolig}  % disable illegal ligatures
+\fi
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Buoy\_HW},
+  pdfauthor={Jonathan Neimann},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Buoy\_HW}
+\author{Jonathan Neimann}
+\date{2024-09-27}
+
+\begin{document}
+\maketitle
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(data.table)}
+\FunctionTok{library}\NormalTok{(lubridate)}
+\FunctionTok{library}\NormalTok{(dplyr)}
+\FunctionTok{library}\NormalTok{(ggplot2)}
+
+\CommentTok{\#Question A}
+
+\NormalTok{file\_root }\OtherTok{=} \StringTok{"https://www.ndbc.noaa.gov/view\_text\_file.php?filename=44013h"}
+\NormalTok{years }\OtherTok{=} \DecValTok{1985}\SpecialCharTok{:}\DecValTok{2023}
+\NormalTok{tail }\OtherTok{=} \StringTok{".txt.gz\&dir=data/historical/stdmet/"}
+\NormalTok{bd\_list }\OtherTok{=} \FunctionTok{list}\NormalTok{()}
+
+\CommentTok{\#loop through the years and skip lines based on data}
+
+\ControlFlowTok{for}\NormalTok{(year }\ControlFlowTok{in}\NormalTok{ years)\{}
+\NormalTok{  path}\OtherTok{\textless{}{-}}\FunctionTok{paste0}\NormalTok{(file\_root,year,tail)}
+\NormalTok{  header}\OtherTok{=}\FunctionTok{scan}\NormalTok{(path,}\AttributeTok{what=} \StringTok{\textquotesingle{}character\textquotesingle{}}\NormalTok{,}\AttributeTok{nlines=}\DecValTok{1}\NormalTok{)}
+\NormalTok{  skip\_lines }\OtherTok{=} \FunctionTok{ifelse}\NormalTok{(year }\SpecialCharTok{\textgreater{}=} \DecValTok{2007}\NormalTok{, }\DecValTok{2}\NormalTok{, }\DecValTok{1}\NormalTok{)}
+\NormalTok{  buoy}\OtherTok{\textless{}{-}}\FunctionTok{fread}\NormalTok{(path,}\AttributeTok{header=}\ConstantTok{FALSE}\NormalTok{,}\AttributeTok{skip=}\NormalTok{skip\_lines)}
+\NormalTok{  num\_col }\OtherTok{=} \FunctionTok{ncol}\NormalTok{(buoy)}
+  \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{length}\NormalTok{(header) }\SpecialCharTok{\textgreater{}}\NormalTok{ num\_col)\{}
+\NormalTok{    header }\OtherTok{=}\NormalTok{ header[}\DecValTok{1}\SpecialCharTok{:}\NormalTok{num\_col]}
+\NormalTok{  \} }\ControlFlowTok{else} \ControlFlowTok{if}\NormalTok{ (}\FunctionTok{length}\NormalTok{(header) }\SpecialCharTok{\textless{}}\NormalTok{ num\_col) \{}
+\NormalTok{    header }\OtherTok{=} \FunctionTok{c}\NormalTok{(header, }\FunctionTok{paste0}\NormalTok{(}\StringTok{"V"}\NormalTok{,(}\FunctionTok{length}\NormalTok{(header) }\SpecialCharTok{+} \DecValTok{1}\NormalTok{)}\SpecialCharTok{:}\NormalTok{num\_col))}
+\NormalTok{  \}}
+  
+  \CommentTok{\#create header}
+  \FunctionTok{colnames}\NormalTok{(buoy) }\OtherTok{=}\NormalTok{ header}
+  
+  \ControlFlowTok{if}\NormalTok{ (}\StringTok{\textquotesingle{}YY\textquotesingle{}} \SpecialCharTok{\%in\%} \FunctionTok{colnames}\NormalTok{(buoy)) \{}
+\NormalTok{    buoy}\SpecialCharTok{$}\NormalTok{YY }\OtherTok{=} \FunctionTok{ifelse}\NormalTok{(buoy}\SpecialCharTok{$}\NormalTok{YY }\SpecialCharTok{\textless{}} \DecValTok{100}\NormalTok{, }\FunctionTok{ifelse}\NormalTok{(buoy}\SpecialCharTok{$}\NormalTok{YY }\SpecialCharTok{\textgreater{}} \DecValTok{20}\NormalTok{, }\DecValTok{1900} \SpecialCharTok{+}\NormalTok{ buoy}\SpecialCharTok{$}\NormalTok{YY, }\DecValTok{2000} \SpecialCharTok{+}\NormalTok{ buoy}\SpecialCharTok{$}\NormalTok{YY), buoy}\SpecialCharTok{$}\NormalTok{YY)}
+\NormalTok{  \}}
+  
+  \ControlFlowTok{if}\NormalTok{ (}\StringTok{\textquotesingle{}YY\textquotesingle{}} \SpecialCharTok{\%in\%} \FunctionTok{colnames}\NormalTok{(buoy) }\SpecialCharTok{\&} \StringTok{"MM"} \SpecialCharTok{\%in\%} \FunctionTok{colnames}\NormalTok{(buoy) }\SpecialCharTok{\&} \StringTok{\textquotesingle{}DD\textquotesingle{}} \SpecialCharTok{\%in\%} \FunctionTok{colnames}\NormalTok{(buoy) }\SpecialCharTok{\&} \StringTok{\textquotesingle{}hh\textquotesingle{}} \SpecialCharTok{\%in\%} \FunctionTok{colnames}\NormalTok{(buoy) }\SpecialCharTok{\&} \StringTok{\textquotesingle{}mm\textquotesingle{}} \SpecialCharTok{\%in\%} \FunctionTok{colnames}\NormalTok{(buoy)) \{}
+\NormalTok{    buoy}\SpecialCharTok{$}\NormalTok{Date }\OtherTok{=} \FunctionTok{ymd\_hms}\NormalTok{(}\FunctionTok{paste}\NormalTok{(buoy}\SpecialCharTok{$}\NormalTok{YY, buoy}\SpecialCharTok{$}\NormalTok{MM, buoy}\SpecialCharTok{$}\NormalTok{DD, buoy}\SpecialCharTok{$}\NormalTok{hh, buoy}\SpecialCharTok{$}\NormalTok{mm))}
+\NormalTok{  \}}
+  
+\NormalTok{  bd\_list[[}\FunctionTok{as.character}\NormalTok{(year)]] }\OtherTok{=}\NormalTok{ buoy}
+\NormalTok{\}}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning in fread(path, header = FALSE, skip = skip_lines): Stopped early on
+## line 5114. Expected 16 fields but found 17. Consider fill=TRUE and
+## comment.char=. First discarded non-empty line: <<2000 08 01 00 78 4.3 5.1 0.58
+## 8.33 5.36 999 1022.9 17.3 17.5 15.0 99.0 99.00>>
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bd\_list }\OtherTok{=} \FunctionTok{rbindlist}\NormalTok{(bd\_list, }\AttributeTok{fill =} \ConstantTok{TRUE}\NormalTok{)}
+
+\CommentTok{\#Create Date Column and get rid of excess columns}
+\NormalTok{bd\_list }\OtherTok{=}\NormalTok{ bd\_list }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Year =} \FunctionTok{coalesce}\NormalTok{(}\FunctionTok{as.numeric}\NormalTok{(YY), }\FunctionTok{as.numeric}\NormalTok{(YYYY), }\FunctionTok{as.numeric}\NormalTok{(}\StringTok{\textasciigrave{}}\AttributeTok{\#YY}\StringTok{\textasciigrave{}}\NormalTok{))) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{YY, }\SpecialCharTok{{-}}\NormalTok{YYYY, }\SpecialCharTok{{-}}\StringTok{\textasciigrave{}}\AttributeTok{\#YY}\StringTok{\textasciigrave{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(Year, }\FunctionTok{everything}\NormalTok{())}
+
+\NormalTok{bd\_list }\OtherTok{=}\NormalTok{ bd\_list }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Wind\_Direction =} \FunctionTok{coalesce}\NormalTok{(WD, WDIR)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{WD, }\SpecialCharTok{{-}}\NormalTok{WDIR)}
+
+\NormalTok{bd\_list }\OtherTok{=}\NormalTok{ bd\_list }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Pressure =} \FunctionTok{coalesce}\NormalTok{(BAR, PRES)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(}\SpecialCharTok{{-}}\NormalTok{BAR, }\SpecialCharTok{{-}}\NormalTok{PRES)}
+
+\NormalTok{bd\_list}\SpecialCharTok{$}\NormalTok{Date }\OtherTok{\textless{}{-}} \FunctionTok{ymd\_h}\NormalTok{(}\FunctionTok{paste}\NormalTok{(bd\_list}\SpecialCharTok{$}\NormalTok{Year, bd\_list}\SpecialCharTok{$}\NormalTok{MM, bd\_list}\SpecialCharTok{$}\NormalTok{DD, bd\_list}\SpecialCharTok{$}\NormalTok{hh, }\AttributeTok{sep =} \StringTok{"{-}"}\NormalTok{))}
+\NormalTok{bd\_list }\OtherTok{\textless{}{-}}\NormalTok{ bd\_list[, }\SpecialCharTok{{-}}\FunctionTok{c}\NormalTok{(}\DecValTok{1}\SpecialCharTok{:}\DecValTok{4}\NormalTok{)]}
+\NormalTok{bd\_list }\OtherTok{\textless{}{-}}\NormalTok{ bd\_list[, }\FunctionTok{c}\NormalTok{(}\DecValTok{15}\NormalTok{, }\DecValTok{1}\SpecialCharTok{:}\DecValTok{14}\NormalTok{)]}
+\end{Highlighting}
+\end{Shaded}
+
+\#Question B
+
+I think most of time it is appropriate to convert missing data to NA.
+This is because there are built in R functions that will allow you to
+omitt them when running statistic calculations on the data. If the cell
+is simply blank, finding things like the mean and the median of certain
+variables would not work. However, there are some situations where
+converting them to NA's might not be applicable. For example, maybe a
+missing cell is serving as a placeholder for data that will be collected
+at another dat, or maybe certain inputs (ie 999) mean something to the
+data collector and represent a key that we are unaware of.
+
+For this data set, there seems to be a lot of NA''s when we replace the
+99's and 999's it's hard to determine any patterns other than some years
+had certain data collected while other years did not (if you add up the
+sum of qall the NA's in the data frame it is 2,314,343). One thing you
+can see though is that the more recent the dates get, the more data
+seems to be filled in, indicating that the buoy has been upgraded over
+time. If there is a section that was once collecting data and is no
+longer, maybe that part of the buoy broke or malfunctioned and was fixed
+at a later date. Below is the code i used to replace all 99's and 999's
+with NA's in the data frame.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{bd\_list[bd\_list }\SpecialCharTok{==} \DecValTok{99} \SpecialCharTok{|}\NormalTok{ bd\_list }\SpecialCharTok{==} \DecValTok{999}\NormalTok{] }\OtherTok{\textless{}{-}} \ConstantTok{NA}
+\end{Highlighting}
+\end{Shaded}
+
+\#Question C
+
+Yes this buoy data can show trends of climate change in both air
+temperature and water temperature data. First we can look at air
+temperature. What i did here was create a new data frame called
+buoy\_year\_air which shrinks down the dates to just one row per each
+ear and then averages out the average air temperature for that year. I
+then plotted it out using a simple scatterplot with years on the x axis
+and average temperature on the y axis and connected them with a line to
+show the trend. Although there is an upward overall trend, i was
+somewhat surprised to see it fairly level throughout all the years, both
+rising and falling fairly consistently. There is however, 2 huge spikes
+in average in both 2012 and 2023. This data may be a bit misleading
+however as the buoy is taking the average air temperature of it's
+location over water, where air temperature can remain rather temperate.
+Where we really start to see a bigger indicator of global warming is
+when we look at the average water temperature. (note* the year 2022 came
+up as NA for it's average air temperature so I excluded it from the
+plot).
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{buoy\_year\_air }\OtherTok{\textless{}{-}}\NormalTok{ bd\_list }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Year =} \FunctionTok{year}\NormalTok{(Date)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Year) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Avg\_ATMP =} \FunctionTok{mean}\NormalTok{(ATMP, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{), }\AttributeTok{.groups =} \StringTok{\textquotesingle{}drop\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(Avg\_ATMP))  }
+
+\FunctionTok{ggplot}\NormalTok{(buoy\_year\_air, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Year, }\AttributeTok{y =}\NormalTok{ Avg\_ATMP)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{color =} \StringTok{"blue"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Average Air Temperature Over Time"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Year"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Average Air Temperature (°C)"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Buoy_HW_files/figure-latex/unnamed-chunk-3-1.pdf}
+
+Here in the water temperature graph (constructed the same way) we can
+see a clear upward trend in average temperature from 1985 to 2023,
+indicating the effects of climate change in the oceans. It is worth
+noting that in both graphs, the year2 1997 and 2012 seem t have
+significant spikes in either direction. This may be worth examining more
+with further EDA.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{buoy\_year\_water }\OtherTok{\textless{}{-}}\NormalTok{ bd\_list }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{Year =} \FunctionTok{year}\NormalTok{(Date)) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{group\_by}\NormalTok{(Year) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{summarize}\NormalTok{(}\AttributeTok{Avg\_WTMP =} \FunctionTok{mean}\NormalTok{(WTMP, }\AttributeTok{na.rm =} \ConstantTok{TRUE}\NormalTok{), }\AttributeTok{.groups =} \StringTok{\textquotesingle{}drop\textquotesingle{}}\NormalTok{) }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{filter}\NormalTok{(}\SpecialCharTok{!}\FunctionTok{is.na}\NormalTok{(Avg\_WTMP)) }
+
+\FunctionTok{ggplot}\NormalTok{(buoy\_year\_water, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ Year, }\AttributeTok{y =}\NormalTok{ Avg\_WTMP)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_line}\NormalTok{(}\AttributeTok{color =} \StringTok{"blue"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{() }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Average Water Temperature Over Time"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Year"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Average Water Temperature (°C)"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\includegraphics{Buoy_HW_files/figure-latex/unnamed-chunk-4-1.pdf}
+
+In terms of statistical significance, we can run regression models on
+both data frames with average air and water temperature as our target
+variable and year as our predictor. When we create these models and
+display the results we can see that the slope coefficient for year is
+positive, further showing a upward linear trend in both water and air
+temperature.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{air\_model }\OtherTok{=} \FunctionTok{lm}\NormalTok{(Avg\_ATMP}\SpecialCharTok{\textasciitilde{}}\NormalTok{Year, }\AttributeTok{data =}\NormalTok{ buoy\_year\_air)}
+\NormalTok{water\_model }\OtherTok{=} \FunctionTok{lm}\NormalTok{(Avg\_WTMP}\SpecialCharTok{\textasciitilde{}}\NormalTok{Year, }\AttributeTok{data =}\NormalTok{ buoy\_year\_water)}
+
+\FunctionTok{summary}\NormalTok{(air\_model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Avg_ATMP ~ Year, data = buoy_year_air)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -3.4397 -0.5040  0.0139  0.5168  4.0793 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)  
+## (Intercept) -74.66171   41.04015  -1.819   0.0772 .
+## Year          0.04209    0.02048   2.055   0.0472 *
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.39 on 36 degrees of freedom
+## Multiple R-squared:  0.105,  Adjusted R-squared:  0.08013 
+## F-statistic: 4.223 on 1 and 36 DF,  p-value: 0.04719
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(water\_model)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = Avg_WTMP ~ Year, data = buoy_year_water)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -4.5863 -0.2855  0.0819  0.3935  3.9124 
+## 
+## Coefficients:
+##               Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) -152.88599   34.68132  -4.408 8.62e-05 ***
+## Year           0.08152    0.01731   4.710 3.44e-05 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 1.216 on 37 degrees of freedom
+## Multiple R-squared:  0.3749, Adjusted R-squared:  0.358 
+## F-statistic: 22.19 on 1 and 37 DF,  p-value: 3.44e-05
+\end{verbatim}
+
+\#Question D
+
+What I am attempting to show here is if air temperature has an effect on
+precipitation on a given day. First, I loaded in the rain data, adjusted
+the date column to with lubridate and took a look at the summary for the
+precipitation variable (HPCP)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
+\NormalTok{rain\_data }\OtherTok{=} \FunctionTok{read.csv}\NormalTok{(}\StringTok{\textquotesingle{}Rainfall.csv\textquotesingle{}}\NormalTok{)}
+\NormalTok{rain\_data}\SpecialCharTok{$}\NormalTok{DATE }\OtherTok{\textless{}{-}} \FunctionTok{ymd\_hm}\NormalTok{(rain\_data}\SpecialCharTok{$}\NormalTok{DATE)}
+\FunctionTok{summary}\NormalTok{(rain\_data}\SpecialCharTok{$}\NormalTok{HPCP)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+## 0.00000 0.00000 0.01000 0.03875 0.04000 2.03000
+\end{verbatim}
+
+We can see that the data for HPCP shows some pretty small number as the
+mean and median, with a maximum that is very far away relatively
+speaking. This indicates a right skewed distribution which I show here
+in a histogram. However since the x axis is so spread apart, I decided
+to take the log of HPCP to bring it closer together.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mean\_precipitation }\OtherTok{\textless{}{-}} \FunctionTok{mean}\NormalTok{(rain\_data}\SpecialCharTok{$}\NormalTok{HPCP)}
+\FunctionTok{ggplot}\NormalTok{(rain\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =} \FunctionTok{log}\NormalTok{(HPCP))) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{binwidth =} \DecValTok{1}\NormalTok{, }\AttributeTok{fill =} \StringTok{"blue"}\NormalTok{, }\AttributeTok{color =} \StringTok{"white"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Distribution of Precipitation (HPCP)"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Precipitation (log)"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Frequency"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 11632 rows containing non-finite outside the scale range
+## (`stat_bin()`).
+\end{verbatim}
+
+\includegraphics{Buoy_HW_files/figure-latex/unnamed-chunk-7-1.pdf}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{rain\_data }\OtherTok{\textless{}{-}}\NormalTok{ rain\_data }\SpecialCharTok{\%\textgreater{}\%} \FunctionTok{rename}\NormalTok{(}\AttributeTok{Date =}\NormalTok{ DATE)}
+\NormalTok{combined\_data }\OtherTok{\textless{}{-}} \FunctionTok{inner\_join}\NormalTok{(rain\_data, bd\_list, }\AttributeTok{by =} \StringTok{"Date"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+you can indeed see that this is a right skewed distribution, with the
+overwhelming majority of the data in the first three bins (lower amount
+of rainfall).
+
+Next i wanted to see the distribution of air temperature, which I also
+used a hitagram for.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(bd\_list, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ ATMP)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_histogram}\NormalTok{(}\AttributeTok{binwidth =} \DecValTok{1}\NormalTok{, }\AttributeTok{fill =} \StringTok{"orange"}\NormalTok{, }\AttributeTok{color =} \StringTok{"white"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Distribution of Air Temperature (ATMP)"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Temperature (°C)"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Frequency"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 102761 rows containing non-finite outside the scale range
+## (`stat_bin()`).
+\end{verbatim}
+
+\includegraphics{Buoy_HW_files/figure-latex/unnamed-chunk-8-1.pdf}
+
+Here you can see the data is a bit more normally distributed, but skewed
+slightly to the left. This makes sense based on the trends we saw with
+climate change earlier, as higher temperatures would be more prevelant
+in the data.
+
+Next I wanted to see the relationship air temperature has on
+precipitation, so I combined the two data frames on rows where the dates
+matched. Because the rain\_data does not count specifically by every
+hour, there are many rows in the buoy data that gor dropped. However the
+rain\_data still provided a significant amount of rows to look at and
+the join was easily done because we made the date format the same
+between the two tables using lubridate
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{combined\_data }\OtherTok{\textless{}{-}} \FunctionTok{inner\_join}\NormalTok{(rain\_data, bd\_list, }\AttributeTok{by =} \StringTok{"Date"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+Lastly, I created a scatter plot to show the relationship between air
+temperature and precipitation from the new data frame called
+combined\_data
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(combined\_data, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ ATMP, }\AttributeTok{y =}\NormalTok{ HPCP)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{alpha =} \FloatTok{0.5}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Air Temperature vs. Precipitation"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Air Temperature (°C)"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Precipitation (inches)"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_minimal}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## Warning: Removed 148 rows containing missing values or values outside the scale range
+## (`geom_point()`).
+\end{verbatim}
+
+\includegraphics{Buoy_HW_files/figure-latex/unnamed-chunk-10-1.pdf}
+
+As you can see in this plot, there is certainly an increase in the
+amount of rain as temperature gets higher, with some pretty huge
+precipitation days around the 15-25 degree celcius range. This indicates
+that the highest chance of a really big rainfall day would be on a day
+that is in this temperature range. It is also worth noting that when the
+temperature is above 25 degrees celcius, there is a steep drop off in
+precipitation in general. This indicates that on really warm days, it is
+not very likely to rain at all.
+
+I decided to run two simple inverse models. One looking at how air
+temperature effects precipitation and one on how precipitation effects
+air temperature using the combined\_data data frame that I made.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{temp\_model1 }\OtherTok{=} \FunctionTok{lm}\NormalTok{(HPCP }\SpecialCharTok{\textasciitilde{}}\NormalTok{ ATMP, }\AttributeTok{data =}\NormalTok{ combined\_data)}
+\NormalTok{temp\_model2 }\OtherTok{=} \FunctionTok{lm}\NormalTok{(ATMP }\SpecialCharTok{\textasciitilde{}}\NormalTok{ HPCP, }\AttributeTok{data =}\NormalTok{ combined\_data)}
+
+\FunctionTok{summary}\NormalTok{(temp\_model1)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = HPCP ~ ATMP, data = combined_data)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -0.07032 -0.03588 -0.02249  0.00641  1.97763 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(>|t|)    
+## (Intercept) 2.494e-02  7.075e-04   35.25   <2e-16 ***
+## ATMP        1.632e-03  6.449e-05   25.31   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 0.07568 on 29482 degrees of freedom
+##   (148 observations deleted due to missingness)
+## Multiple R-squared:  0.02127,    Adjusted R-squared:  0.02124 
+## F-statistic: 640.8 on 1 and 29482 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(temp\_model2)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Call:
+## lm(formula = ATMP ~ HPCP, data = combined_data)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -26.7740  -5.1869  -0.7043   5.3654  20.1654 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(>|t|)    
+## (Intercept)  8.07400    0.04419  182.71   <2e-16 ***
+## HPCP        13.03068    0.51478   25.31   <2e-16 ***
+## ---
+## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+## 
+## Residual standard error: 6.762 on 29482 degrees of freedom
+##   (148 observations deleted due to missingness)
+## Multiple R-squared:  0.02127,    Adjusted R-squared:  0.02124 
+## F-statistic: 640.8 on 1 and 29482 DF,  p-value: < 2.2e-16
+\end{verbatim}
+
+You can see that the coefficients for the first model are very small,
+which makes sense as we are dealing with inches of rain. Yet there is
+still a positive slope meaning that everytime the precipitation
+increases, we can also expect the temperature to increase ever so
+slightly.
+
+The second model tells a similar story but in a different way. Now the
+slope coefficient for the HPCP variable is massive. This also makes
+sense because it is determining what happens if the precipitation
+increases by one full inch, which is a large amount in this data set.
+Nnetheless, if that were to happen this model is telling us we can
+expect a temperature increase bu 13 degrees celcius.
+
+\end{document}

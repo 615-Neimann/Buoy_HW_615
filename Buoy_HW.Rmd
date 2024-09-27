@@ -1,0 +1,222 @@
+---
+title: "Buoy_HW"
+author: "Jonathan Neimann"
+date: "2024-09-27"
+output:
+  word_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(data.table)
+library(lubridate)
+library(dplyr)
+library(ggplot2)
+
+```
+
+```{r}
+library(data.table)
+library(lubridate)
+library(dplyr)
+library(ggplot2)
+
+#Question A
+
+file_root = "https://www.ndbc.noaa.gov/view_text_file.php?filename=44013h"
+years = 1985:2023
+tail = ".txt.gz&dir=data/historical/stdmet/"
+bd_list = list()
+
+#loop through the years and skip lines based on data
+
+for(year in years){
+  path<-paste0(file_root,year,tail)
+  header=scan(path,what= 'character',nlines=1)
+  skip_lines = ifelse(year >= 2007, 2, 1)
+  buoy<-fread(path,header=FALSE,skip=skip_lines)
+  num_col = ncol(buoy)
+  if (length(header) > num_col){
+    header = header[1:num_col]
+  } else if (length(header) < num_col) {
+    header = c(header, paste0("V",(length(header) + 1):num_col))
+  }
+  
+  #create header
+  colnames(buoy) = header
+  
+  if ('YY' %in% colnames(buoy)) {
+    buoy$YY = ifelse(buoy$YY < 100, ifelse(buoy$YY > 20, 1900 + buoy$YY, 2000 + buoy$YY), buoy$YY)
+  }
+  
+  if ('YY' %in% colnames(buoy) & "MM" %in% colnames(buoy) & 'DD' %in% colnames(buoy) & 'hh' %in% colnames(buoy) & 'mm' %in% colnames(buoy)) {
+    buoy$Date = ymd_hms(paste(buoy$YY, buoy$MM, buoy$DD, buoy$hh, buoy$mm))
+  }
+  
+  bd_list[[as.character(year)]] = buoy
+}
+
+bd_list = rbindlist(bd_list, fill = TRUE)
+
+#Create Date Column and get rid of excess columns
+bd_list = bd_list %>%
+  mutate(Year = coalesce(as.numeric(YY), as.numeric(YYYY), as.numeric(`#YY`))) %>%
+  select(-YY, -YYYY, -`#YY`) %>%
+  select(Year, everything())
+
+bd_list = bd_list %>%
+  mutate(Wind_Direction = coalesce(WD, WDIR)) %>%
+  select(-WD, -WDIR)
+
+bd_list = bd_list %>%
+  mutate(Pressure = coalesce(BAR, PRES)) %>%
+  select(-BAR, -PRES)
+
+bd_list$Date <- ymd_h(paste(bd_list$Year, bd_list$MM, bd_list$DD, bd_list$hh, sep = "-"))
+bd_list <- bd_list[, -c(1:4)]
+bd_list <- bd_list[, c(15, 1:14)]
+
+```
+
+#Question B
+
+I think most of time it is appropriate to convert missing data to NA. This is because there are built in R functions that will allow you to omitt them when running statistic calculations on the data. If the cell is simply blank, finding things like the mean and the median of certain variables would not work. However, there are some situations where converting them to NA's might not be applicable. For example, maybe a missing cell is serving as a placeholder for data that will be collected at another dat, or maybe certain inputs (ie 999) mean something to the data collector and represent a key that we are unaware of. 
+
+For this data set, there seems to be a lot of NA"s when we replace the 99's and 999's it's hard to determine any patterns other than some years had certain data collected while other years did not (if you add up the sum of qall the NA's in the data frame it is 2,314,343). One thing you can see though is that the more recent the dates get, the more data seems to be filled in, indicating that the buoy has been upgraded over time. If there is a section that was once collecting data and is no longer, maybe that part of the buoy broke or malfunctioned and was fixed at a later date. Below is the code i used to replace all 99's and 999's with NA's in the data frame. 
+
+```{r}
+bd_list[bd_list == 99 | bd_list == 999] <- NA
+
+
+```
+
+
+#Question C
+
+Yes this buoy data can show trends of climate change in both air temperature and water temperature data. First we can look at air temperature. What i did here was create a new data frame called buoy_year_air which shrinks down the dates to just one row per each ear and then averages out the average air temperature for that year. I then plotted it out using a simple scatterplot with years on the x axis and average temperature on the y axis and connected them with a line to show the trend. Although there is an upward overall trend, i was somewhat surprised to see it fairly level throughout all the years, both rising and falling fairly consistently. There is however, 2 huge spikes in average in both 2012 and 2023. This data may be a bit misleading however as the buoy is taking the average air temperature of it's location over water, where air temperature can remain rather temperate. Where we really start to see a bigger indicator of global warming is when we look at the average water temperature. (note* the year 2022 came up as NA for it's average air temperature so I excluded it from the plot).
+```{r}
+buoy_year_air <- bd_list %>%
+  mutate(Year = year(Date)) %>%
+  group_by(Year) %>%
+  summarize(Avg_ATMP = mean(ATMP, na.rm = TRUE), .groups = 'drop') %>%
+  filter(!is.na(Avg_ATMP))  
+
+ggplot(buoy_year_air, aes(x = Year, y = Avg_ATMP)) +
+  geom_line(color = "blue") +
+  geom_point() +
+  labs(title = "Average Air Temperature Over Time",
+       x = "Year",
+       y = "Average Air Temperature (°C)") +
+  theme_minimal()
+
+
+```
+
+Here in the water temperature graph (constructed the same way) we can see a clear upward trend in average temperature from 1985 to 2023, indicating the effects of climate change in the oceans. It is worth noting that in both graphs, the year2 1997 and 2012 seem t have significant spikes in either direction. This may be worth examining more with further EDA. 
+
+```{r}
+buoy_year_water <- bd_list %>%
+  mutate(Year = year(Date)) %>%
+  group_by(Year) %>%
+  summarize(Avg_WTMP = mean(WTMP, na.rm = TRUE), .groups = 'drop') %>%
+  filter(!is.na(Avg_WTMP)) 
+
+ggplot(buoy_year_water, aes(x = Year, y = Avg_WTMP)) +
+  geom_line(color = "blue") +
+  geom_point() +
+  labs(title = "Average Water Temperature Over Time",
+       x = "Year",
+       y = "Average Water Temperature (°C)") +
+  theme_minimal()
+```
+
+In terms of statistical significance, we can run regression models on both data frames with average air and water temperature as our target variable and year as our predictor. When we create these models and display the results we can see that the slope coefficient for year is positive, further showing a upward linear trend in both water and air temperature. 
+```{r}
+
+air_model = lm(Avg_ATMP~Year, data = buoy_year_air)
+water_model = lm(Avg_WTMP~Year, data = buoy_year_water)
+
+summary(air_model)
+summary(water_model)
+```
+
+#Question D
+
+What I am attempting to show here is if air temperature has an effect on precipitation on a given day. First, I loaded in the rain data, adjusted the date column to with lubridate and took a look at the summary for the precipitation variable (HPCP)
+
+```{r}
+library(dplyr)
+rain_data = read.csv('Rainfall.csv')
+rain_data$DATE <- ymd_hm(rain_data$DATE)
+summary(rain_data$HPCP)
+
+  
+```
+We can see that the data for HPCP shows some pretty small number as the mean and median, with a maximum that is very far away relatively speaking. This indicates a right skewed distribution which I show here in a histogram. However since the x axis is so spread apart, I decided to take the log of HPCP to bring it closer together. 
+
+```{r}
+mean_precipitation <- mean(rain_data$HPCP)
+ggplot(rain_data, aes(x = log(HPCP))) +
+  geom_histogram(binwidth = 1, fill = "blue", color = "white") +
+  labs(title = "Distribution of Precipitation (HPCP)",
+       x = "Precipitation (log)",
+       y = "Frequency") +
+  theme_minimal()
+
+rain_data <- rain_data %>% rename(Date = DATE)
+combined_data <- inner_join(rain_data, bd_list, by = "Date")
+```
+
+you can indeed see that this is a right skewed distribution, with the overwhelming majority of the data in the first three bins (lower amount of rainfall). 
+
+Next i wanted to see the distribution of air temperature, which I also used a hitagram for. 
+
+```{r}
+ggplot(bd_list, aes(x = ATMP)) +
+  geom_histogram(binwidth = 1, fill = "orange", color = "white") +
+  labs(title = "Distribution of Air Temperature (ATMP)",
+       x = "Temperature (°C)",
+       y = "Frequency") +
+  theme_minimal()
+```
+
+Here you can see the data is a bit more normally distributed, but skewed slightly to the left. This makes sense based on the trends we saw with climate change earlier, as higher temperatures would be more prevelant in the data. 
+
+Next I wanted to see the relationship air temperature has on precipitation, so I combined the two data frames on rows where the dates matched. Because the rain_data does not count specifically by every hour, there are many rows in the buoy data that gor dropped. However the rain_data still provided a significant amount of rows to look at and the join was easily done because we made the date format the same between the two tables using lubridate 
+
+
+```{r}
+combined_data <- inner_join(rain_data, bd_list, by = "Date")
+
+```
+
+Lastly, I created a scatter plot to show the relationship between air temperature and precipitation from the new data frame called combined_data
+
+```{r}
+ggplot(combined_data, aes(x = ATMP, y = HPCP)) +
+  geom_point(alpha = 0.5) +
+  labs(title = "Air Temperature vs. Precipitation",
+       x = "Air Temperature (°C)",
+       y = "Precipitation (inches)") +
+  theme_minimal()
+```
+
+As you can see in this plot, there is certainly an increase in the amount of rain as temperature gets higher, with some pretty huge precipitation days around the 15-25 degree celcius range. This indicates that the highest chance of a really big rainfall day would be on a day that is in this temperature range. It is also worth noting that when the temperature is above 25 degrees celcius, there is a steep drop off in precipitation in general. This indicates that on really warm days, it is not very likely to rain at all. 
+
+
+I decided to run two simple inverse models. One looking at how air temperature effects precipitation and one on how precipitation effects air temperature using the combined_data data frame that I made. 
+
+```{r}
+temp_model1 = lm(HPCP ~ ATMP, data = combined_data)
+temp_model2 = lm(ATMP ~ HPCP, data = combined_data)
+
+summary(temp_model1)
+summary(temp_model2)
+
+
+```
+
+You can see that the coefficients for the first model are very small, which makes sense as we are dealing with inches of rain. Yet there is still a positive slope meaning that everytime the precipitation increases, we can also expect the temperature to increase ever so slightly.
+
+The second model tells a similar story but in a different way. Now the slope coefficient for the HPCP variable is massive. This also makes sense because it is determining what happens if the precipitation increases by one full inch, which is a large amount in this data set. Nnetheless, if that were to happen this model is telling us we can expect a temperature increase bu 13 degrees celcius. 
