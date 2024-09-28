@@ -1,3 +1,7 @@
+library(data.table)
+library(lubridate)
+library(dplyr)
+library(ggplot2)
 
 #Question A
 
